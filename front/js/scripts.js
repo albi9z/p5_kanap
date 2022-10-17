@@ -5,15 +5,17 @@ fetch(url)
   .then((data) => addProducts(data));
 
 function addProducts(data) {
-  data.forEach((kanap) => {
-    console.log("product", kanap);
+  data.forEach((products) => {
+    //---recupération--des-donnees---------------
+    // const _id = data._id;
+    // const name = data.name;
+    // const imageUrl = data.imageUrl;
+    // const altTxt = data.altTxt;
+    // const description = data.description;
 
-    //---recupération--des-donnees-------------
-    const _id = data[0]._id;
-    const name = data[0].name;
-    const imageUrl = data[0].imageUrl;
-    const description = data[0].description;
-    const altTxt = data[0].altTxt;
+    //---destructuring---------------------------
+
+    const { _id, name, imageUrl, altTxt, description } = products;
 
     //data-creation-des--elements-----------------
     const anchor = makeAnchor(_id);
@@ -22,21 +24,21 @@ function addProducts(data) {
     const h3 = makeH3(name);
     const p = makeParagraphe(description);
 
-    //---ajoute--les--elements-----------------
+    //---ajoute--les--elements--------------------
+    appendElementsToArticle(article, image, h3, p);
     appendArticleToAnchors(anchor, article);
-    appendElementsToArticle(article, [image, h3, p]);
   });
 }
 
-function appendElementsToArticle(article, array) {
-  array.forEach((item) => {
-    article.appendChild(item);
-  });
+function appendElementsToArticle(article, image, h3, p) {
+  article.appendChild(image);
+  article.appendChild(h3);
+  article.appendChild(p);
 }
 
-function makeAnchor(id) {
+function makeAnchor(_id) {
   const anchor = document.createElement("a");
-  anchor.href = "./product.html?id=" + id;
+  anchor.href = "./product.html?id=" + _id;
   return anchor;
 }
 
