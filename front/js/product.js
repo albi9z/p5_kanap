@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(url);
 const id = urlParams.get("id");
 if (id != null) {
   let itemPrice = 0;
-  let imgUrl, altText;
+  let imgUrl, altText, articleName;
 }
 
 fetch(`http://localhost:3000/api/products/${id}`)
@@ -25,6 +25,7 @@ function data_kanap(description_kanap) {
     description_kanap;
   imgUrl = imageUrl;
   altText = altTxt;
+  articleName = name;
   makeImage(imageUrl, altTxt);
   makeTitle(name);
   itemPrice = price;
@@ -82,13 +83,13 @@ function clickCards() {
   const quantity = document.querySelector("#quantity").value;
 
   //----locale--storage------------------------------
-  saveCard(color, quantity);
+  saveOrder(color, quantity);
   if (orderIsInvalid(color, quantity)) return;
 
   window.location.href = "cart.html";
 }
 
-function saveCard(color, quantity) {
+function saveOrder(color, quantity) {
   const data = {
     id: id,
     color: color,
@@ -96,6 +97,7 @@ function saveCard(color, quantity) {
     price: itemPrice,
     imageUrl: imgUrl,
     altTxt: altText,
+    name: articleName,
   };
   localStorage.setItem(id, JSON.stringify(data));
 }
